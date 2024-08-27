@@ -10,7 +10,7 @@ const contact = $('#contact');
 const customer_btn = $('#customer_btn button');
 
 
-const url = '';
+const url = 'http://localhost:8081/Pos_Backend_EE_war_exploded/customer';
 
 //load the customer table
 const loadCustomerTable = function () {
