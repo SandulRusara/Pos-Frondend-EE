@@ -18,38 +18,43 @@ item_btns.eq(0).on('click', () => {
     let price = parseFloat(unit_price.val().trim());
     let qty_val = parseInt(qty.val());
 
-    if (validate(itemCode, 'item code') && validate(desc, 'description') &&
-        validate(price, 'unit price') && validate(qty_val, 'qty on hand')) {
+    const ItemDTO = {
+        itemId: itemCode,
+        description: desc,
+        unitPrice: price,
+        qty: qty_val
 
-        let item = new ItemModel(itemCode, desc, price, qty_val);
-
-        Swal.fire({
-            title: 'Do you want to save the changes?',
-            showDenyButton: true,
-            confirmButtonText: 'Save',
-            denyButtonText: `Don't save`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    contentType: 'application/json',
-                    data: JSON.stringify(item),
-                    success: function (res) {
-                        Swal.fire('Item Saved!', '', 'success');
-                        item_btns.eq(3).click();
-                        loadItemTable();
-                    },
-                    error: function (err) {
-                        Swal.fire('Changes are not saved', '', 'info')
-                    }
-                });
-
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        });
     }
+
+    console.log(ItemDTO);
+
+    //     create JSON
+    const itemDTOJson = JSON.stringify(ItemDTO);
+    console.log(itemDTOJson);
+
+    //save the data with ajax
+    const http = new XMLHttpRequest();
+    http.onreadystatechange = () => {
+        //check state
+        if (http.readyState === 4) {
+            if (http.status === 200) {
+                var jsonTypeResponse = JSON.stringify(http.responseText);
+                console.log(jsonTypeResponse);
+            } else {
+                console.error("Failed");
+                console.error("Status Received", http.status);
+                console.error("Processing Stage", http.readyState);
+            }
+        } else {
+            console.log("Processing stage", http.readyState);
+        }
+    }
+
+    http.open("POST", "http://localhost:8081/Pos_Backend_EE_war_exploded/item", true);
+    http.setRequestHeader("Content-Type", "application/json");
+    http.send(itemDTOJson);
+
+
 });
 
 //update item
@@ -59,75 +64,86 @@ item_btns.eq(1).on('click', () => {
     let price = parseFloat(unit_price.val().trim());
     let qty_val = parseInt(qty.val());
 
-    if (validate(itemCode, 'item code') && validate(desc, 'description') &&
-        validate(price, 'unit price') && validate(qty_val, 'qty on hand')) {
+    const ItemDTO = {
+        itemId: itemCode,
+        description: desc,
+        unitPrice: price,
+        qty: qty_val
 
-        let item = new ItemModel(itemCode, desc, price, qty_val);
-
-        Swal.fire({
-            title: 'Do you want to update the item?',
-            showDenyButton: true,
-            confirmButtonText: 'Update',
-            denyButtonText: `Don't update`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: 'PUT',
-                    url: url,
-                    contentType: 'application/json',
-                    data: JSON.stringify(item),
-                    success: function (res) {
-                        Swal.fire('Item Updated!', '', 'success');
-                        item_btns.eq(3).click();
-                        loadItemTable();
-                    },
-                    error: function (err) {
-                        Swal.fire('Item not updated!', '', 'info')
-                    }
-                });
-
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not updated!', '', 'info')
-            }
-        });
     }
+    console.log(ItemDTO);
+
+    //     create JSON
+    const itemDTOJson = JSON.stringify(ItemDTO);
+    console.log(itemDTOJson);
+
+    //save the data with ajax
+    const http = new XMLHttpRequest();
+    http.onreadystatechange = () => {
+        //check state
+        if (http.readyState === 4) {
+            if (http.status === 200) {
+                var jsonTypeResponse = JSON.stringify(http.responseText);
+                console.log(jsonTypeResponse);
+            } else {
+                console.error("Failed");
+                console.error("Status Received", http.status);
+                console.error("Processing Stage", http.readyState);
+            }
+        } else {
+            console.log("Processing stage", http.readyState);
+        }
+    }
+
+    http.open("PUT", "http://localhost:8081/Pos_Backend_EE_war_exploded/item", true);
+    http.setRequestHeader("Content-Type", "application/json");
+    http.send(itemDTOJson);
+
+
 });
 
 //delete item
 item_btns.eq(2).on('click', () => {
     let itemCode = item_Code.val().trim();
+    let desc = description.val().trim();
+    let price = parseFloat(unit_price.val().trim());
+    let qty_val = parseInt(qty.val());
 
-    if (validate(itemCode, 'item code')) {
+    const ItemDTO = {
+        itemId: itemCode,
+        description: desc,
+        unitPrice: price,
+        qty: qty_val
 
-        const item = { itemId: itemCode }
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "This will be deleted permanently",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: url,
-                    contentType: 'application/json',
-                    data: JSON.stringify(item),
-                    success: function (res) {
-                        Swal.fire('Deleted!', 'Your Item has been deleted.', 'success');
-                        item_btns.eq(3).click();
-                        loadItemTable();
-                    },
-                    error: function (err) {
-                        Swal.fire('Customer not Deleted!', '', 'info')
-                    }
-                });
-            }
-        });
     }
+    console.log(ItemDTO);
+    //     create JSON
+    const itemDTOJson = JSON.stringify(ItemDTO);
+    console.log(itemDTOJson);
+
+    //save the data with ajax
+    const http = new XMLHttpRequest();
+    http.onreadystatechange = () => {
+        //check state
+        if (http.readyState === 4) {
+            if (http.status === 200) {
+                var jsonTypeResponse = JSON.stringify(http.responseText);
+                console.log(jsonTypeResponse);
+            } else {
+                console.error("Failed");
+                console.error("Status Received", http.status);
+                console.error("Processing Stage", http.readyState);
+            }
+        } else {
+            console.log("Processing stage", http.readyState);
+        }
+    }
+
+    http.open("DELETE", "http://localhost:8081/Pos_Backend_EE_war_exploded/item", true);
+    http.setRequestHeader("Content-Type", "application/json");
+    http.send(itemDTOJson);
+
+
 });
 
 //load item
